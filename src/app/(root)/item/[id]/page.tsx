@@ -1,4 +1,6 @@
+import { auth } from "@/app/auth";
 import Link from "next/link";
+import { redirect } from "next/navigation";
 
 const fakeData = [
   {
@@ -30,7 +32,11 @@ const fakeData = [
   },
 ];
 
-export default function ItemDetailPage({ params }: { params: { id: string } }) {
+export default async function ItemDetailPage({ params }: { params: { id: string } }) {
+  const session = await auth();
+
+  if(!session) redirect('/check');
+  
   const itemId = Number(params.id);
 
   const product = fakeData.find((p) => p._id === itemId);

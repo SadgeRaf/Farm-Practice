@@ -1,7 +1,14 @@
+import { redirect } from "next/navigation";
 import Footer from "../component/Footer";
 import Navbar from "../component/Navbar";
+import { auth } from "../auth";
 
-export default function ManagePage() {
+export default async function ManagePage() {
+
+  const session = await auth();
+  
+    if(!session) redirect('/check');
+
   return (
     <>
      <Navbar></Navbar>

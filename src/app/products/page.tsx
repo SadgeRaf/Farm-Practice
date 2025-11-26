@@ -1,8 +1,10 @@
 import React from "react";
 import Navbar from "../component/Navbar";
 import Footer from "../component/Footer";
+import { auth } from "../auth";
+import { redirect } from "next/navigation";
 
-export default function ProductsPage() {
+export default async function ProductsPage() {
   // Fake JSON product data
   const products = [
     {
@@ -41,6 +43,10 @@ export default function ProductsPage() {
       image: "https://i.postimg.cc/8cL7SYm7/Feed-Your-Dog-in-Winters-900x600.jpg",
     },
   ];
+
+  const session = await auth();
+  
+    if(!session) redirect('/check');
 
   return (
     <>
