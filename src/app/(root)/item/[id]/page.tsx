@@ -2,54 +2,28 @@ import { auth } from "@/app/auth";
 import Link from "next/link";
 import { redirect } from "next/navigation";
 
-const fakeData = [
-  {
-    _id: 1,
-    title: "Cucumbers",
-    category: "Vegetable",
-    description:
-      "Fresh organic cucumbers grown naturally without chemicals. Perfect for salads and daily meals.",
-    image: "https://i.postimg.cc/8cL7SYm7/Feed-Your-Dog-in-Winters-900x600.jpg",
-    _createdAt: "Yesterday",
-  },
-  {
-    _id: 2,
-    title: "Fresh Tomatoes",
-    category: "Vegetable",
-    description:
-      "Juicy red tomatoes loaded with nutrients and grown using sustainable farming practices.",
-    image: "https://i.postimg.cc/8cL7SYm7/Feed-Your-Dog-in-Winters-900x600.jpg",
-    _createdAt: "Yesterday",
-  },
-  {
-    _id: 3,
-    title: "Organic Milk",
-    category: "Dairy",
-    description:
-      "Pure and fresh organic milk sourced from healthy farm cows. No preservatives added.",
-    image: "https://i.postimg.cc/8cL7SYm7/Feed-Your-Dog-in-Winters-900x600.jpg",
-    _createdAt: "Today",
-  },
-];
-
 export default async function ItemDetailPage({ params }: { params: { id: string } }) {
   const session = await auth();
+  if (!session) redirect("/check");
 
-  if(!session) redirect('/check');
-  
-  const itemId = Number(params.id);
+  const { id } = params;
 
-  const product = fakeData.find((p) => p._id === itemId);
+  // Fetch from your backend API
+  const res = await fetch(`http://localhost:5000/items/${id}`, {
+    cache: "no-store",
+  });
 
-  if (!product) {
+  const product = await res.json();
+
+  if (!product?._id) {
     return (
       <section className="px-6 py-16 text-center">
         <h1 className="text-3xl font-bold text-red-600">Product Not Found</h1>
         <Link
-          href="/"
+          href="/products"
           className="mt-6 inline-block bg-green-600 text-white px-6 py-3 rounded-lg"
         >
-          Go Back Home
+          Go Back
         </Link>
       </section>
     );
@@ -59,13 +33,12 @@ export default async function ItemDetailPage({ params }: { params: { id: string 
     <section className="px-6 py-16 max-w-4xl mx-auto">
       {/* Back Button */}
       <Link
-        href="/"
+        href="/products"
         className="inline-block mb-6 text-green-600 hover:text-green-800 font-medium"
       >
-        ← Back to Home
+        ← Back to Products
       </Link>
 
-      {/* Content */}
       <div className="bg-white shadow-lg rounded-xl overflow-hidden border border-gray-100">
         <img
           src={product.image}
@@ -83,7 +56,10 @@ export default async function ItemDetailPage({ params }: { params: { id: string 
           <p className="text-gray-700 leading-relaxed">{product.description}</p>
 
           <p className="text-sm text-gray-400">
-            Added: <span className="font-medium">{product._createdAt}</span>
+            Added:{" "}
+            <span className="font-medium">
+              {product._createdAt || "Unknown"}
+            </span>
           </p>
 
           <button className="bg-green-600 text-white px-6 py-3 rounded-lg hover:bg-green-700 transition">
