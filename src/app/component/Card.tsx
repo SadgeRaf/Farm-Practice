@@ -30,7 +30,7 @@ const Card = ({ post }: { post: ItemTypeCard }) => {
 
         <div className="text-xs text-gray-400">Added: {post._createdAt}</div>
         <button className="bg-green-500 px-4 rounded-lg">
-            <Link href={`/items/${post._id}`} className="text-green-800">Details</Link>
+            <Link href={`/item/${post._id}`} className="text-green-800">Details</Link>
         </button>
       </div>
     </li>

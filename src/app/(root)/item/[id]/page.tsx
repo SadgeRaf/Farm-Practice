@@ -1,19 +1,17 @@
-import { auth } from "@/app/auth";
 import Link from "next/link";
-import { redirect } from "next/navigation";
+import OrderButton from "../../../component/OrderButton";
 
-export default async function ItemDetailPage({ params }: { params: { id: string } }) {
-  const session = await auth();
-  if (!session) redirect("/check");
 
-  const { id } = params;
+export default async function ItemDetailPage({
+  params,}: {params: Promise<{ id: string }>;}) {
+  // FIX: unwrap dynamic route params properly
+  const { id } = await params;
 
-  // Fetch from your backend API
-  const res = await fetch(`http://localhost:5000/items/${id}`, {
-    cache: "no-store",
-  });
+  // Fetch item from backend
+  const res = await fetch(`http://localhost:5000/item/${id}`);
 
   const product = await res.json();
+
 
   if (!product?._id) {
     return (
@@ -31,7 +29,6 @@ export default async function ItemDetailPage({ params }: { params: { id: string 
 
   return (
     <section className="px-6 py-16 max-w-4xl mx-auto">
-      {/* Back Button */}
       <Link
         href="/products"
         className="inline-block mb-6 text-green-600 hover:text-green-800 font-medium"
@@ -53,7 +50,9 @@ export default async function ItemDetailPage({ params }: { params: { id: string 
 
           <h1 className="text-3xl font-bold text-gray-800">{product.title}</h1>
 
-          <p className="text-gray-700 leading-relaxed">{product.description}</p>
+          <p className="text-gray-700 leading-relaxed">
+            {product.description}
+          </p>
 
           <p className="text-sm text-gray-400">
             Added:{" "}
@@ -62,9 +61,8 @@ export default async function ItemDetailPage({ params }: { params: { id: string 
             </span>
           </p>
 
-          <button className="bg-green-600 text-white px-6 py-3 rounded-lg hover:bg-green-700 transition">
-            Order Now
-          </button>
+          <OrderButton id={product._id} />
+
         </div>
       </div>
     </section>
