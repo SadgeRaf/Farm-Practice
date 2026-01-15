@@ -1,18 +1,14 @@
 import React from "react";
 import Navbar from "../component/Navbar";
 import Footer from "../component/Footer";
-import { auth } from "../auth";
-import { redirect } from "next/navigation";
 import Link from "next/link";
 
 export default async function ProductsPage() {
-  const session = await auth();
-  if (!session) redirect("/check");
 
   // Fetch data from your backend
-  const res = await fetch("http://localhost:5000/allitems", {
-    cache: "no-store",
-  });
+  const res = await fetch('http://localhost:5000/allitems', {
+  cache: "no-store",
+});
   const products = await res.json();
 
   return (
