@@ -8,8 +8,17 @@ import AboutSection from "../component/AboutUs";
 import Testimonials from "../component/Customer";
 import backgroundImg from "../../../public/Vinita_Featured-Image.png";
 
+interface Post {
+  _id: string;
+  title: string;
+  description: string;
+  category: string;
+  image?: string;
+  _createdAt: string;
+}
+
 export default function Home() {
-  const [posts, setPosts] = useState([]);
+  const [posts, setPosts] = useState<Post[]>([]);
 
   useEffect(() => {
     async function loadData() {

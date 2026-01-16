@@ -1,5 +1,14 @@
 import Link from "next/link";
 
+interface ItemTypeCard {
+  _id: string;
+  title: string;
+  description: string;
+  category: string;
+  image?: string;
+  _createdAt: string;
+}
+
 const Card = ({ post }: { post: ItemTypeCard }) => {
   return (
     <li className="bg-white shadow-md rounded-xl overflow-hidden hover:shadow-lg transition p-4 border border-gray-100">

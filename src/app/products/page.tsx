@@ -3,13 +3,21 @@ import Navbar from "../component/Navbar";
 import Footer from "../component/Footer";
 import Link from "next/link";
 
+interface Product {
+  _id: string;
+  title: string;
+  description: string;
+  category: string;
+  image: string;
+}
+
 export default async function ProductsPage() {
 
   // Fetch data from your backend
   const res = await fetch('https://task-server-lovat.vercel.app/allitems', {
   cache: "no-store",
 });
-  const products = await res.json();
+  const products: Product[] = await res.json();
 
   return (
     <>
