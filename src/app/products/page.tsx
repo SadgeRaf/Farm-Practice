@@ -6,7 +6,7 @@ import Link from "next/link";
 export default async function ProductsPage() {
 
   // Fetch data from your backend
-  const res = await fetch('http://localhost:5000/allitems', {
+  const res = await fetch('https://task-server-lovat.vercel.app/allitems', {
   cache: "no-store",
 });
   const products = await res.json();

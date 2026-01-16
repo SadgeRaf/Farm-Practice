@@ -14,7 +14,7 @@ export default function Home() {
   useEffect(() => {
     async function loadData() {
       try {
-        const res = await fetch("http://localhost:5000/items");
+        const res = await fetch("https://task-server-lovat.vercel.app/items");
         const data = await res.json();
         setPosts(data);
       } catch (error) {

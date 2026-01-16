@@ -8,7 +8,7 @@ export default async function ItemDetailPage({
   const { id } = await params;
 
   // Fetch item from backend
-  const res = await fetch(`http://localhost:5000/item/${id}`);
+  const res = await fetch(`https://task-server-lovat.vercel.app/item/${id}`);
 
   const product = await res.json();
 

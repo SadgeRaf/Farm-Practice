@@ -5,7 +5,7 @@ import { useState } from "react";
 export default function RemoveOrderButton({ orderId, onRemoved }: { orderId: string, onRemoved: () => void }) {
   async function removeOrder() {
     try {
-      const res = await fetch(`http://localhost:5000/order/${orderId}`, {
+      const res = await fetch(`https://task-server-lovat.vercel.app/order/${orderId}`, {
         method: "DELETE",
       });
 

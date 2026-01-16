@@ -1,3 +1,4 @@
+// auth.ts - Original working version with GitHub and credentials
 import NextAuth from "next-auth";
 import GitHub from "next-auth/providers/github";
 import Credentials from "next-auth/providers/credentials";
@@ -13,14 +14,12 @@ export const { handlers, auth, signIn, signOut } = NextAuth({
       credentials: {
         email: { label: "Email", type: "email" },
         password: { label: "Password", type: "password" },
-        name: { label: "Name", type: "text" },
       },
       async authorize(credentials) {
-        // Hardcoded users (in production, use a database)
+        // Hardcoded users
         const hardcodedUsers = [
-          { id: "1", email: "user@example.com", password: "password123", name: "Demo User" },
-          { id: "2", email: "admin@khanagro.com", password: "admin123", name: "Admin User" },
-          { id: "3", email: "test@test.com", password: "test123", name: "Test User" },
+          { id: "1", email: "admin@khanagro.com", password: "monterwhite", name: "Admin User" },
+          { id: "2", email: "user@example.com", password: "password123", name: "Demo User" },
         ];
 
         if (!credentials?.email || !credentials?.password) {
@@ -44,7 +43,7 @@ export const { handlers, auth, signIn, signOut } = NextAuth({
     }),
   ],
   pages: {
-    signIn: "/check", // Your custom login page
+    signIn: "/check",
   },
   callbacks: {
     async session({ session, token }) {

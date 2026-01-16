@@ -3,7 +3,7 @@
 export default function OrderButton({ id }: { id: number }) {
   async function placeOrder() {
     try {
-      const res = await fetch("http://localhost:5000/order", {
+      const res = await fetch("https://task-server-lovat.vercel.app/order", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ productId: id }),
